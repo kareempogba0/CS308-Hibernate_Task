@@ -16,7 +16,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "actor", schema = "hr")
+@Table(name = "actor")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,7 +41,7 @@ public class Actor {
   private City city;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "hr.actor_movie",
+  @JoinTable(name = "actor_movie",
       joinColumns = {@JoinColumn(name = "actor_id")},
       inverseJoinColumns = {@JoinColumn(name = "movie_id")}
   )
