@@ -3,6 +3,8 @@ package com.sci;
 import com.sci.criteria.FilterQuery;
 import com.sci.criteria.Operator;
 import com.sci.dao.DBConfig;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,22 +65,25 @@ public class StudentApp {
 
         DBStudent dbStudent = new DBStudent();
 //
-//        List<FilterQuery> filterQueries = new ArrayList<>();
-//        filterQueries.add(new FilterQuery("studentAddress", "Cairo", Operator.EQ)); // get students from Cairo
-//        filterQueries.add(new FilterQuery("salary", 3000, Operator.GT));
-//
-//        List<Student> studentList = dbStudent.getByFilter(filterQueries);
-//        System.out.println("the size of the list = " + studentList.size());
-//        for(Student student : studentList) {
-//            System.out.println(student);
-//        }
+        List<FilterQuery> filterQueries = new ArrayList<>();
+//        LocalDate date = LocalDate.of(2025, 1, 1);
+        LocalDate date = LocalDate.now();
+        filterQueries.add(new FilterQuery("studentId", 0, Operator.GT)); // get students from Cairo
+        filterQueries.add(new FilterQuery("studentName", "Pogba", Operator.EQ));
+        filterQueries.add(new FilterQuery("joinedDate", date, Operator.LT));
 
-    List<Student> studentList = dbStudent.get();
-    List<Course> courseList = new DBCourse().get();
+        List<Student> studentList = dbStudent.getByFilter(filterQueries);
+        System.out.println("the size of the list = " + studentList.size());
+        for(Student student : studentList) {
+            System.out.println(student);
+        }
 
-    for(Course course : courseList) {
-      System.out.println(course);
-    }
+//    List<Student> studentList = dbStudent.get();
+//    List<Course> courseList = new DBCourse().get();
+
+//    for(Course course : courseList) {
+//      System.out.println(course);
+//    }
 
 //    for(Student e : studentList) {
 //      System.out.println(e);

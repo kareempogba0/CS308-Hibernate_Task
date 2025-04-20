@@ -1,6 +1,7 @@
 package com.sci.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "students", schema = "system")
 @Data
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE) // 2nd level cashing
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name="students_gen", sequenceName="students_seq", allocationSize = 1)
@@ -40,7 +41,8 @@ public class Student implements Serializable {
     @Column(name = "age")
     private Integer studentAge;
     @Column(name = "joined_date")
-    private Date joinedDate;
+//    private Date joinedDate;
+    private LocalDate joinedDate;
 
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(

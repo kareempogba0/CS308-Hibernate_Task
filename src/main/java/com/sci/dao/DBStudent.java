@@ -159,13 +159,29 @@ public class DBStudent {
 //      cr.select(root);
 
             Predicate[] predicates = new Predicate[filterQueries.size()];
-            for (int i = 0; i < filterQueries.size(); i++) {
-                if (filterQueries.get(i).getOp() == Operator.EQ) {
-                    predicates[i] = cb.equal(root.get(filterQueries.get(i).getAttributeName()),
-                            filterQueries.get(i).getAttributeValue());
-                } else if (filterQueries.get(i).getOp() == Operator.GT) {
-                    predicates[i] = cb.gt(root.get(filterQueries.get(i).getAttributeName()),
-                            (Integer) filterQueries.get(i).getAttributeValue());
+//            for (int i = 0; i < filterQueries.size(); i++) {
+//                if (filterQueries.get(i).getOp() == Operator.EQ) {
+//                    predicates[i] = cb.equal(root.get(filterQueries.get(i).getAttributeName()),
+//                            filterQueries.get(i).getAttributeValue());
+//                } else if (filterQueries.get(i).getOp() == Operator.GT) {
+//                    predicates[i] = cb.gt(root.get(filterQueries.get(i).getAttributeName()),
+//                            (Integer) filterQueries.get(i).getAttributeValue());
+//                }
+//            }
+            for (int i = 0; i < predicates.length; i++) {
+                Operator op = filterQueries.get(i).getOp();
+                switch (op){
+                    case EQ:
+                        predicates[i] = cb.equal(root.get(filterQueries.get(i).getAttributeName()), filterQueries.get(i).getAttributeValue());
+                        break;
+                    case GT:
+                        predicates[i] = cb.greaterThan(root.get(filterQueries.get(i).getAttributeName()), (Comparable)filterQueries.get(i).getAttributeValue()); //comparable
+                        break;
+                    case LT:
+                        predicates[i] = cb.lessThan(root.get(filterQueries.get(i).getAttributeName()), (Comparable)filterQueries.get(i).getAttributeValue());
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + op);
                 }
             }
             cr.select(root).where(predicates);
